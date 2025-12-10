@@ -310,12 +310,11 @@
     }
 
     /* Customer Info Modal */
-    /* Info / Checkout modal base (mobile-first full-screen) */
     .info-modal, .checkout-modal {
       display: none;
       position: fixed;
       inset: 0;
-      background: rgba(0, 0, 0, 0.9);
+      background: rgba(0, 0, 0, 0.95);
       justify-content: center;
       align-items: center;
       z-index: 1000;
@@ -346,7 +345,7 @@
       overflow-y: auto;
     }
 
-    /* Checkout panel layout: mobile-first single column, expands on larger screens */
+    /* Checkout panel layout */
     .checkout-panel {
       display: grid;
       gap: 16px;
@@ -437,24 +436,70 @@
       font-family: "Poppins", sans-serif;
     }
 
+    /* Enhanced Payment Options */
     .payment-options { 
       display:flex; 
-      gap:8px; 
+      gap:10px; 
       flex-direction:column;
-      margin: 10px 0;
+      margin: 12px 0;
     }
     .pay-option { 
       display:flex; 
-      gap:8px; 
+      gap:12px; 
       align-items:center; 
-      padding:10px; 
-      border-radius:8px; 
+      padding:14px; 
+      border-radius:10px; 
       background:linear-gradient(90deg, rgba(255,215,0,0.06), rgba(255,215,0,0.02)); 
-      border:1px solid rgba(255,215,0,0.04); 
+      border:2px solid rgba(255,215,0,0.1); 
       cursor:pointer;
+      transition: all 0.3s ease;
+    }
+    .pay-option:hover { 
+      background:linear-gradient(90deg, rgba(255,215,0,0.1), rgba(255,215,0,0.05)); 
+      border-color: rgba(255,215,0,0.3);
+    }
+    .pay-option.selected { 
+      background:linear-gradient(90deg, rgba(255,215,0,0.15), rgba(255,215,0,0.08)); 
+      border:2px solid #ffd700;
+      box-shadow: 0 0 15px rgba(255,215,0,0.3);
     }
     .pay-option input { 
       margin-right:8px;
+      accent-color: #ffd700;
+      transform: scale(1.2);
+    }
+    .payment-details {
+      margin-top: 15px;
+      padding: 15px;
+      background: rgba(255,215,0,0.05);
+      border-radius: 10px;
+      border: 1px solid rgba(255,215,0,0.1);
+      animation: fadeIn 0.5s ease;
+    }
+    .payment-info {
+      font-size: 0.9em;
+      color: #fff3b0;
+      line-height: 1.5;
+      padding: 8px;
+      border-radius: 6px;
+      background: rgba(0,0,0,0.3);
+    }
+    .payment-info strong {
+      color: #ffd700;
+    }
+    .selected-payment-display {
+      margin-top: 12px;
+      padding: 12px;
+      background: linear-gradient(90deg, rgba(255,215,0,0.1), rgba(255,215,0,0.05));
+      border-radius: 8px;
+      border: 1px solid rgba(255,215,0,0.2);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      animation: fadeIn 0.3s ease;
+    }
+    .selected-payment-display span:first-child {
+      font-size: 1.2em;
     }
 
     .place-btn { 
@@ -634,6 +679,10 @@
       .popup-content {
         padding: 25px 20px 15px 20px;
       }
+      
+      .pay-option {
+        padding: 12px;
+      }
     }
     
     /* Very small phones */
@@ -807,12 +856,66 @@
             <textarea id="co_notes" class="notes" placeholder="Notes (optional)"></textarea>
           </div>
 
-          <div style="margin-top:8px">
-            <h4 style="margin:6px 0 8px 0;color:#fff6b7">Payment</h4>
+          <div style="margin-top:12px">
+            <h4 style="margin:6px 0 8px 0;color:#fff6b7">Payment Method</h4>
             <div class="payment-options">
-              <label class="pay-option"><input type="radio" name="co_pay" value="Cash on Delivery" checked /> Cash on Delivery</label>
-              <label class="pay-option"><input type="radio" name="co_pay" value="GCash" /> GCash</label>
-              <label class="pay-option"><input type="radio" name="co_pay" value="Credit/Debit" /> Credit/Debit</label>
+              <label class="pay-option" onclick="selectPaymentMethod('Cash on Delivery')">
+                <input type="radio" name="co_pay" value="Cash on Delivery" checked />
+                <div>
+                  <strong>Cash on Delivery</strong>
+                  <div class="small" style="font-size:0.85em;opacity:0.8">Pay when you receive your order</div>
+                </div>
+              </label>
+              <label class="pay-option" onclick="selectPaymentMethod('GCash')">
+                <input type="radio" name="co_pay" value="GCash" />
+                <div>
+                  <strong>GCash</strong>
+                  <div class="small" style="font-size:0.85em;opacity:0.8">Pay via GCash mobile app</div>
+                </div>
+              </label>
+              <label class="pay-option" onclick="selectPaymentMethod('Credit/Debit')">
+                <input type="radio" name="co_pay" value="Credit/Debit" />
+                <div>
+                  <strong>Credit/Debit Card</strong>
+                  <div class="small" style="font-size:0.85em;opacity:0.8">Pay with your card</div>
+                </div>
+              </label>
+            </div>
+            
+            <!-- Selected Payment Display -->
+            <div id="selectedPaymentDisplay" class="selected-payment-display" style="display:none;">
+              <span>✅</span>
+              <div>
+                <div>Selected Payment:</div>
+                <strong id="selectedPaymentText"></strong>
+              </div>
+            </div>
+            
+            <!-- Payment Details Section -->
+            <div class="payment-details" id="paymentDetails" style="display:none;">
+              <div id="cashDetails" class="payment-info">
+                💵 <strong>Cash on Delivery Instructions:</strong><br>
+                • Pay the exact amount (<span id="cashAmount"></span>) when our delivery partner arrives<br>
+                • Please prepare exact change if possible<br>
+                • Our delivery hours are 9 AM to 9 PM<br>
+                • You'll receive an SMS 30 minutes before delivery
+              </div>
+              <div id="gcashDetails" class="payment-info" style="display:none;">
+                📱 <strong>GCash Payment Instructions:</strong><br>
+                • Send payment to <strong>0912-345-6789</strong> (Whisk & Whimsy)<br>
+                • Amount to send: <span id="gcashAmount"></span><br>
+                • Include your order number as reference<br>
+                • Screenshot and upload the transaction receipt<br>
+                • Payment must be completed within 1 hour
+              </div>
+              <div id="cardDetails" class="payment-info" style="display:none;">
+                💳 <strong>Credit/Debit Card Instructions:</strong><br>
+                • You'll be redirected to our secure payment gateway<br>
+                • Amount to pay: <span id="cardAmount"></span><br>
+                • We accept Visa, Mastercard, and UnionPay<br>
+                • 3D Secure authentication required<br>
+                • Transaction may take 1-2 minutes to process
+              </div>
             </div>
           </div>
 
@@ -831,9 +934,10 @@
   <!-- Success Popup -->
   <div id="popupModal" class="popup-modal">
     <div class="popup-content">
-      <div style="font-size:2em;">🎉</div>
-      <h2 id="popupTitle">Order placed successfully!</h2>
+      <div style="font-size:2.5em; margin-bottom: 10px;">🎉</div>
+      <h2 id="popupTitle" style="margin: 10px 0;">Order placed successfully!</h2>
       <p id="popupMessage">Your delicious treats are on their way! 🍰</p>
+      <div id="popupPaymentDetails" style="margin: 15px 0; padding: 10px; background: rgba(255,215,0,0.05); border-radius: 8px; font-size: 0.9em;"></div>
       <button onclick="closePopup()">OK</button>
     </div>
   </div>
@@ -1028,6 +1132,7 @@
     }
 
     let checkoutRefreshInterval = null;
+    let selectedPaymentMethod = 'Cash on Delivery';
 
     function openCheckoutModal() {
       // Require login before allowing checkout
@@ -1052,8 +1157,17 @@
         if (saved.address) document.getElementById('co_address').value = saved.address;
         if (saved.paymentMethod) {
           const radios = document.getElementsByName('co_pay');
-          for (const r of radios) { if (r.value === saved.paymentMethod) r.checked = true; }
+          for (const r of radios) { 
+            if (r.value === saved.paymentMethod) {
+              r.checked = true;
+              selectedPaymentMethod = saved.paymentMethod;
+              selectPaymentMethod(saved.paymentMethod);
+            }
+          }
         }
+      } else {
+        // Default to Cash on Delivery
+        selectPaymentMethod('Cash on Delivery');
       }
 
       renderCheckout();
@@ -1066,7 +1180,63 @@
 
     function closeCheckoutModal() {
       document.getElementById("checkoutModal").classList.remove("active");
-      if (checkoutRefreshInterval) { clearInterval(checkoutRefreshInterval); checkoutRefreshInterval = null; }
+      if (checkoutRefreshInterval) { 
+        clearInterval(checkoutRefreshInterval); 
+        checkoutRefreshInterval = null; 
+      }
+    }
+
+    function selectPaymentMethod(method) {
+      selectedPaymentMethod = method;
+      
+      // Remove selected class from all options
+      document.querySelectorAll('.pay-option').forEach(option => {
+        option.classList.remove('selected');
+      });
+      
+      // Add selected class to clicked option
+      const selectedOption = document.querySelector(`.pay-option input[value="${method}"]`).closest('.pay-option');
+      if (selectedOption) {
+        selectedOption.classList.add('selected');
+      }
+      
+      // Update radio button
+      document.querySelector(`input[value="${method}"]`).checked = true;
+      
+      // Show payment details section
+      const detailsContainer = document.getElementById('paymentDetails');
+      detailsContainer.style.display = 'block';
+      
+      // Show selected payment display
+      const display = document.getElementById('selectedPaymentDisplay');
+      const text = document.getElementById('selectedPaymentText');
+      display.style.display = 'flex';
+      text.textContent = method;
+      
+      // Hide all details first
+      document.getElementById('cashDetails').style.display = 'none';
+      document.getElementById('gcashDetails').style.display = 'none';
+      document.getElementById('cardDetails').style.display = 'none';
+      
+      // Get current total
+      const total = document.getElementById('co_total').textContent;
+      
+      // Show selected method details with amount
+      if (method === 'Cash on Delivery') {
+        document.getElementById('cashDetails').style.display = 'block';
+        document.getElementById('cashAmount').textContent = total;
+      } else if (method === 'GCash') {
+        document.getElementById('gcashDetails').style.display = 'block';
+        document.getElementById('gcashAmount').textContent = total;
+      } else if (method === 'Credit/Debit') {
+        document.getElementById('cardDetails').style.display = 'block';
+        document.getElementById('cardAmount').textContent = total;
+      }
+      
+      // Save selection
+      const saved = JSON.parse(localStorage.getItem('customerInfo') || '{}');
+      saved.paymentMethod = method;
+      localStorage.setItem('customerInfo', JSON.stringify(saved));
     }
 
     function renderCheckout() {
@@ -1106,6 +1276,13 @@
       if (delEl) delEl.textContent = `₱${deliveryFee.toFixed(2)}`;
       if (taxEl) taxEl.textContent = `₱${tax.toFixed(2)}`;
       if (totEl) totEl.textContent = `₱${total.toFixed(2)}`;
+      
+      // Update payment details with current total
+      if (selectedPaymentMethod) {
+        document.getElementById('cashAmount').textContent = `₱${total.toFixed(2)}`;
+        document.getElementById('gcashAmount').textContent = `₱${total.toFixed(2)}`;
+        document.getElementById('cardAmount').textContent = `₱${total.toFixed(2)}`;
+      }
     }
 
     function placeOrder() {
@@ -1120,7 +1297,10 @@
         showPopup('Please complete your name, phone and address.');
         return;
       }
-      if (!pay) { showPopup('Please select a payment method.'); return; }
+      if (!pay) { 
+        showPopup('Please select a payment method.'); 
+        return; 
+      }
 
       const agg = aggregateCartItems(cart);
       const subtotal = agg.total || 0;
@@ -1128,8 +1308,18 @@
       const tax = +(subtotal * 0.12).toFixed(2);
       const total = +(subtotal + deliveryFee + tax).toFixed(2);
 
+      // Create payment confirmation message
+      let paymentConfirmation = '';
+      if (pay === 'Cash on Delivery') {
+        paymentConfirmation = 'Pay ₱' + total.toFixed(2) + ' in cash when your order arrives.';
+      } else if (pay === 'GCash') {
+        paymentConfirmation = 'Please send ₱' + total.toFixed(2) + ' to GCash number 0912-345-6789 and include your order number as reference.';
+      } else if (pay === 'Credit/Debit') {
+        paymentConfirmation = 'Your card will be charged ₱' + total.toFixed(2) + '. You will be redirected to our secure payment gateway.';
+      }
+
       const orders = JSON.parse(localStorage.getItem('orders')) || [];
-      const id = 'ORD' + Date.now();
+      const id = 'ORD' + Date.now().toString().slice(-6);
       const order = {
         id,
         items: agg.items,
@@ -1154,8 +1344,29 @@
 
       // show confirmation state
       document.getElementById('checkoutConfirm').style.display = 'block';
-      document.getElementById('checkoutConfirm').textContent = `Order ${id} placed — Preparing your treats!`;
-      showPopup(`Order ${id} confirmed. Total ₱${total.toFixed(2)} — ${pay}`);
+      document.getElementById('checkoutConfirm').innerHTML = `
+        <div style="color:#4caf50; font-weight:600; font-size:1.1em;">🎉 Order ${id} Confirmed!</div>
+        <div style="margin-top:8px; font-size:0.95em;">Payment Method: <strong>${pay}</strong></div>
+        <div style="margin-top:5px; font-size:0.9em; opacity:0.9;">Total Amount: ₱${total.toFixed(2)}</div>
+        <div style="margin-top:10px; padding:8px; background:rgba(255,215,0,0.05); border-radius:6px; font-size:0.85em;">
+          ${paymentConfirmation}
+        </div>
+      `;
+      
+      // Show enhanced popup with payment details
+      const popupPayment = document.getElementById('popupPaymentDetails');
+      popupPayment.innerHTML = `
+        <div style="margin-bottom: 8px;">
+          <strong>Order ID:</strong> ${id}<br>
+          <strong>Total:</strong> ₱${total.toFixed(2)}<br>
+          <strong>Payment:</strong> ${pay}
+        </div>
+        <div style="font-size: 0.85em; opacity: 0.9;">
+          ${paymentConfirmation}
+        </div>
+      `;
+      
+      showPopup(`Order ${id} placed successfully!`);
 
       // clear cart
       localStorage.removeItem('cart');
@@ -1163,7 +1374,10 @@
       updateCartCount();
 
       // close modal shortly and redirect to myorders
-      setTimeout(() => { closeCheckoutModal(); window.location.href = 'myorders.html'; }, 1600);
+      setTimeout(() => { 
+        closeCheckoutModal(); 
+        window.location.href = 'myorders.html'; 
+      }, 2500);
     }
 
     // Aggregate cart items into unique items with qty and subtotal, return {items, total}
@@ -1185,15 +1399,23 @@
     function showPopup(message) {
       document.getElementById("popupMessage").textContent = message;
       document.getElementById("popupModal").classList.add("active");
-      setTimeout(closePopup, 2500);
+      setTimeout(closePopup, 3000);
     }
 
     function closePopup() {
       document.getElementById("popupModal").classList.remove("active");
     }
 
+    // Initialize page
     displayProducts();
     updateCartCount();
+    
+    // Set default payment method on page load
+    document.addEventListener('DOMContentLoaded', function() {
+      setTimeout(() => {
+        selectPaymentMethod('Cash on Delivery');
+      }, 100);
+    });
   </script>
 </body>
 </html>
