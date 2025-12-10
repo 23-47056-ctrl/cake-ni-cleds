@@ -94,6 +94,8 @@
 
     .orders-container {
       padding: 80px 16px;
+      max-width: 1200px;
+      margin: 0 auto;
     }
 
     @media(min-width: 640px) {
@@ -113,10 +115,33 @@
       border-bottom: 1px solid rgba(255, 215, 0, 0.3);
       padding-bottom: 5px;
       margin-bottom: 20px;
+      font-size: 1.4em;
+    }
+
+    @media(min-width: 640px) {
+      h2 {
+        font-size: 1.6em;
+      }
+    }
+
+    /* Mobile responsiveness for table */
+    .table-container {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      margin: 0 -16px;
+      padding: 0 16px;
+    }
+
+    @media(min-width: 640px) {
+      .table-container {
+        margin: 0;
+        padding: 0;
+      }
     }
 
     table {
       width: 100%;
+      min-width: 600px;
       border-collapse: collapse;
       color: #ffd700;
       background: rgba(255, 255, 255, 0.05);
@@ -128,6 +153,7 @@
     @media(min-width: 640px) {
       table {
         font-size: 0.95em;
+        min-width: auto;
       }
     }
 
@@ -152,6 +178,13 @@
     th {
       color: #fff3b0;
       background: rgba(255, 215, 0, 0.1);
+      font-size: 0.9em;
+    }
+
+    @media(min-width: 640px) {
+      th {
+        font-size: 1em;
+      }
     }
 
     footer {
@@ -161,6 +194,13 @@
       padding: 25px;
       border-top: 1px solid rgba(255, 215, 0, 0.3);
       font-size: 0.9em;
+      padding: 20px 16px;
+    }
+
+    @media(min-width: 640px) {
+      footer {
+        padding: 25px;
+      }
     }
 
     .status {
@@ -168,7 +208,16 @@
       padding: 5px 10px;
       border-radius: 5px;
       display: inline-block;
+      font-size: 0.85em;
+      white-space: nowrap;
     }
+    
+    @media(min-width: 640px) {
+      .status {
+        font-size: 0.95em;
+      }
+    }
+    
     .status.pending { 
       color: #ffa500; 
       background: rgba(255, 165, 0, 0.2);
@@ -191,12 +240,87 @@
       padding: 8px;
       border-radius: 5px;
       margin: 5px 0;
+      max-width: 250px;
     }
 
     .product-item {
       color: #fff;
-      font-size: 0.9em;
+      font-size: 0.85em;
       padding: 4px 0;
+      line-height: 1.4;
+    }
+
+    /* Mobile-specific adjustments */
+    @media(max-width: 480px) {
+      .logo-container img {
+        width: 40px;
+        height: 40px;
+      }
+      
+      .site-title {
+        font-size: 1.2em;
+      }
+      
+      .header-nav .nav-link {
+        padding: 6px 8px;
+        font-size: 0.9em;
+      }
+      
+      .orders-container {
+        padding: 70px 12px;
+      }
+      
+      h2 {
+        font-size: 1.3em;
+        margin-bottom: 15px;
+      }
+      
+      .product-list {
+        padding: 6px;
+        max-width: 200px;
+      }
+      
+      .product-item {
+        font-size: 0.8em;
+      }
+      
+      th, td {
+        padding: 6px 8px;
+      }
+      
+      footer {
+        font-size: 0.85em;
+        padding: 15px 12px;
+      }
+    }
+
+    /* Additional improvements for very small screens */
+    @media(max-width: 360px) {
+      .logo-container {
+        gap: 8px;
+      }
+      
+      .site-title {
+        font-size: 1.1em;
+      }
+      
+      .header-nav {
+        gap: 6px;
+      }
+      
+      .header-nav .nav-link {
+        padding: 5px 6px;
+        font-size: 0.85em;
+      }
+      
+      .orders-container {
+        padding: 60px 10px;
+      }
+      
+      .table-container {
+        margin: 0 -10px;
+        padding: 0 10px;
+      }
     }
   </style>
 </head>
@@ -217,15 +341,17 @@
 
   <div class="orders-container">
     <h2>Order History</h2>
-    <table id="ordersTable">
-      <tr>
-        <th>Order ID</th>
-        <th>Items</th>
-        <th>Item Count</th>
-        <th>Total</th>
-        <th>Status</th>
-      </tr>
-    </table>
+    <div class="table-container">
+      <table id="ordersTable">
+        <tr>
+          <th>Order ID</th>
+          <th>Items</th>
+          <th>Item Count</th>
+          <th>Total</th>
+          <th>Status</th>
+        </tr>
+      </table>
+    </div>
   </div>
 
   <footer>
@@ -243,7 +369,7 @@
       }
 
       if (orders.length === 0) {
-        table.innerHTML += "<tr><td colspan='4' style='text-align: center; padding: 20px;'>📭 No orders found.</td></tr>";
+        table.innerHTML += "<tr><td colspan='5' style='text-align: center; padding: 20px;'>📭 No orders found.</td></tr>";
       } else {
         orders.forEach((o) => {
           const row = table.insertRow();
