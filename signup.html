@@ -225,6 +225,123 @@
       transition: background 0.2s;
     }
     .popup-close:hover { background: linear-gradient(90deg,#ffcc33,#ffd700); }
+    /* === MOBILE RESPONSIVENESS ADDITIONS === */
+@media screen and (max-width: 768px) {
+  body {
+    height: auto;
+    min-height: 100vh;
+    padding: 20px 15px;
+    display: block;
+  }
+
+  .signup-container {
+    max-width: 100%;
+    padding: 25px 20px;
+    margin: 0 auto;
+    border: 1px solid rgba(255, 215, 0, 0.2);
+  }
+
+  h1 {
+    font-size: 1.6em;
+    margin-bottom: 15px;
+  }
+
+  h2 {
+    font-size: 1.3em;
+    margin-bottom: 20px;
+  }
+
+  input {
+    padding: 14px 12px;
+    margin: 8px 0;
+    font-size: 16px; /* Prevents iOS zoom */
+  }
+
+  button {
+    padding: 14px;
+  }
+
+  .site-header {
+    padding: 10px 15px;
+    position: relative;
+  }
+
+  .logo-container img {
+    width: 40px;
+    height: 40px;
+  }
+
+  .site-title {
+    font-size: 1.2em;
+  }
+
+  .header-nav {
+    gap: 8px;
+  }
+
+  .header-nav .nav-link,
+  .cart-btn {
+    padding: 6px 8px;
+    font-size: 0.9em;
+  }
+}
+
+/* Very small phones */
+@media screen and (max-width: 480px) {
+  .signup-container {
+    padding: 20px 15px;
+  }
+
+  h1 {
+    font-size: 1.4em;
+  }
+
+  h2 {
+    font-size: 1.2em;
+  }
+
+  .logo-container {
+    gap: 8px;
+  }
+
+  .logo-container img {
+    width: 36px;
+    height: 36px;
+  }
+
+  .site-title {
+    font-size: 1.1em;
+  }
+
+  .header-nav {
+    gap: 5px;
+  }
+
+  .header-nav .nav-link {
+    padding: 5px 6px;
+    font-size: 0.85em;
+  }
+}
+
+/* Landscape orientation fix */
+@media screen and (max-height: 600px) and (orientation: landscape) {
+  body {
+    height: auto;
+    padding: 15px 10px;
+  }
+
+  .signup-container {
+    max-width: 90%;
+    margin: 20px auto;
+  }
+}
+
+/* Tablet optimization */
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+  .signup-container {
+    max-width: 450px;
+  }
+}
   </style>
   <script>
     function showPopup(msg) {
@@ -236,3 +353,4 @@
     }
   </script>
 </html>
+
