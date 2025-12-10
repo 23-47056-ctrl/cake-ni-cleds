@@ -400,6 +400,242 @@
       border-top: 1px solid rgba(255, 215, 0, 0.3);
       font-size: 0.9em;
     }
+
+    /* === MOBILE RESPONSIVENESS ADDITIONS === */
+@media screen and (max-width: 768px) {
+  /* Header adjustments */
+  header {
+    padding: 10px 12px !important;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .logo-container img {
+    width: 36px !important;
+    height: 36px !important;
+  }
+
+  h1 {
+    font-size: 1.1em !important;
+    letter-spacing: 0.5px;
+  }
+
+  .back-btn {
+    padding: 6px 12px;
+    font-size: 0.9em;
+  }
+
+  .cart-icon {
+    font-size: 1.5em;
+  }
+
+  .cart-icon span {
+    top: -8px;
+    right: -8px;
+    padding: 3px 6px;
+    font-size: 0.7em;
+  }
+
+  /* Product grid adjustments */
+  .product-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 10px;
+    padding: 12px !important;
+  }
+
+  .product {
+    padding: 8px;
+    min-height: 180px;
+  }
+
+  .product img {
+    max-width: 90px !important;
+    height: 90px !important;
+  }
+
+  .product h3 {
+    font-size: 0.85em;
+    margin: 5px 0;
+  }
+
+  .product p {
+    font-size: 0.8em;
+  }
+
+  button {
+    padding: 6px 10px;
+    font-size: 0.8em;
+    margin-top: 5px;
+  }
+
+  /* Cart modal adjustments */
+  .cart-modal {
+    width: 90vw !important;
+    max-width: 350px;
+    padding: 15px;
+    top: 10%;
+  }
+
+  .cart-item {
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+
+  /* Checkout modal adjustments */
+  .info-modal, .checkout-modal {
+    padding: 12px;
+  }
+
+  .modal-box {
+    padding: 15px !important;
+    max-width: 95vw;
+    margin: 0 8px;
+  }
+
+  .checkout-panel {
+    grid-template-columns: 1fr !important;
+    gap: 15px;
+  }
+
+  .order-items {
+    max-height: 180px !important;
+  }
+
+  .customer-fields input,
+  .customer-fields textarea {
+    font-size: 16px; /* Prevents iOS zoom */
+  }
+
+  .payment-options {
+    flex-direction: column;
+  }
+
+  .pay-option {
+    padding: 10px;
+  }
+
+  .place-btn {
+    padding: 12px;
+    font-size: 1em;
+  }
+}
+
+/* Very small phones */
+@media screen and (max-width: 480px) {
+  .product-grid {
+    grid-template-columns: 1fr !important;
+    gap: 12px;
+  }
+
+  .product {
+    max-width: 280px;
+    margin: 0 auto;
+  }
+
+  .product img {
+    max-width: 120px !important;
+    height: 120px !important;
+  }
+
+  header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .logo-container {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .back-btn {
+    font-size: 0.85em;
+    padding: 5px 10px;
+  }
+
+  /* Cart modal on very small screens */
+  .cart-modal {
+    width: 95vw !important;
+    padding: 12px;
+  }
+
+  /* Checkout items more compact */
+  .order-row {
+    flex-wrap: wrap;
+    font-size: 0.9em;
+  }
+
+  .summary-row {
+    font-size: 0.9em;
+  }
+
+  .total {
+    font-size: 1em;
+  }
+}
+
+/* Tablet adjustments */
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+  .product-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 15px;
+    padding: 25px !important;
+  }
+
+  .product {
+    max-width: 200px;
+  }
+
+  .modal-box {
+    max-width: 85vw;
+  }
+}
+
+/* Landscape mode adjustments */
+@media screen and (max-height: 600px) and (orientation: landscape) {
+  body {
+    overflow-y: auto;
+  }
+
+  .product-grid {
+    grid-template-columns: repeat(4, 1fr) !important;
+    gap: 10px;
+    padding: 15px !important;
+  }
+
+  .product {
+    min-height: 160px;
+  }
+
+  .product img {
+    height: 80px !important;
+  }
+
+  .modal-box {
+    max-height: 85vh;
+    overflow-y: auto;
+  }
+}
+
+/* Accessibility improvements */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* High-contrast mode support */
+@media (prefers-contrast: high) {
+  .product {
+    border: 2px solid #ffd700;
+  }
+
+  input, textarea {
+    border: 2px solid #ffd700;
+  }
+}
   </style>
 </head>
 
@@ -812,3 +1048,4 @@
   </script>
 </body>
 </html>
+
