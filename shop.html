@@ -436,7 +436,7 @@
       font-family: "Poppins", sans-serif;
     }
 
-    /* Enhanced Payment Options */
+    /* Enhanced Payment Options - NO RADIO BUTTONS */
     .payment-options { 
       display:flex; 
       gap:10px; 
@@ -462,11 +462,6 @@
       background:linear-gradient(90deg, rgba(255,215,0,0.15), rgba(255,215,0,0.08)); 
       border:2px solid #ffd700;
       box-shadow: 0 0 15px rgba(255,215,0,0.3);
-    }
-    .pay-option input { 
-      margin-right:8px;
-      accent-color: #ffd700;
-      transform: scale(1.2);
     }
     .payment-details {
       margin-top: 15px;
@@ -500,6 +495,11 @@
     }
     .selected-payment-display span:first-child {
       font-size: 1.2em;
+    }
+    .pay-icon {
+      font-size: 1.5em;
+      width: 40px;
+      text-align: center;
     }
 
     .place-btn { 
@@ -683,6 +683,10 @@
       .pay-option {
         padding: 12px;
       }
+      .pay-icon {
+        font-size: 1.3em;
+        width: 30px;
+      }
     }
     
     /* Very small phones */
@@ -859,27 +863,27 @@
           <div style="margin-top:12px">
             <h4 style="margin:6px 0 8px 0;color:#fff6b7">Payment Method</h4>
             <div class="payment-options">
-              <label class="pay-option" onclick="selectPaymentMethod('Cash on Delivery')">
-                <input type="radio" name="co_pay" value="Cash on Delivery" checked />
+              <div class="pay-option" onclick="selectPaymentMethod('Cash on Delivery')">
+                <div class="pay-icon">💵</div>
                 <div>
                   <strong>Cash on Delivery</strong>
                   <div class="small" style="font-size:0.85em;opacity:0.8">Pay when you receive your order</div>
                 </div>
-              </label>
-              <label class="pay-option" onclick="selectPaymentMethod('GCash')">
-                <input type="radio" name="co_pay" value="GCash" />
+              </div>
+              <div class="pay-option" onclick="selectPaymentMethod('GCash')">
+                <div class="pay-icon">📱</div>
                 <div>
                   <strong>GCash</strong>
                   <div class="small" style="font-size:0.85em;opacity:0.8">Pay via GCash mobile app</div>
                 </div>
-              </label>
-              <label class="pay-option" onclick="selectPaymentMethod('Credit/Debit')">
-                <input type="radio" name="co_pay" value="Credit/Debit" />
+              </div>
+              <div class="pay-option" onclick="selectPaymentMethod('Credit/Debit')">
+                <div class="pay-icon">💳</div>
                 <div>
                   <strong>Credit/Debit Card</strong>
                   <div class="small" style="font-size:0.85em;opacity:0.8">Pay with your card</div>
                 </div>
-              </label>
+              </div>
             </div>
             
             <!-- Selected Payment Display -->
@@ -1156,14 +1160,8 @@
         if (saved.contact) document.getElementById('co_phone').value = saved.contact;
         if (saved.address) document.getElementById('co_address').value = saved.address;
         if (saved.paymentMethod) {
-          const radios = document.getElementsByName('co_pay');
-          for (const r of radios) { 
-            if (r.value === saved.paymentMethod) {
-              r.checked = true;
-              selectedPaymentMethod = saved.paymentMethod;
-              selectPaymentMethod(saved.paymentMethod);
-            }
-          }
+          selectedPaymentMethod = saved.paymentMethod;
+          selectPaymentMethod(saved.paymentMethod);
         }
       } else {
         // Default to Cash on Delivery
@@ -1195,13 +1193,17 @@
       });
       
       // Add selected class to clicked option
-      const selectedOption = document.querySelector(`.pay-option input[value="${method}"]`).closest('.pay-option');
+      const selectedOption = Array.from(document.querySelectorAll('.pay-option')).find(option => {
+        const text = option.querySelector('strong').textContent;
+        if (text === 'Cash on Delivery' && method === 'Cash on Delivery') return true;
+        if (text === 'GCash' && method === 'GCash') return true;
+        if (text === 'Credit/Debit Card' && method === 'Credit/Debit') return true;
+        return false;
+      });
+      
       if (selectedOption) {
         selectedOption.classList.add('selected');
       }
-      
-      // Update radio button
-      document.querySelector(`input[value="${method}"]`).checked = true;
       
       // Show payment details section
       const detailsContainer = document.getElementById('paymentDetails');
@@ -1291,7 +1293,7 @@
       const phone = document.getElementById('co_phone').value.trim();
       const address = document.getElementById('co_address').value.trim();
       const notes = document.getElementById('co_notes').value.trim();
-      const pay = Array.from(document.getElementsByName('co_pay')).find(r => r.checked)?.value;
+      const pay = selectedPaymentMethod;
 
       if (!name || !phone || !address) {
         showPopup('Please complete your name, phone and address.');
