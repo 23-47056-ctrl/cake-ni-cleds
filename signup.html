@@ -38,11 +38,20 @@
       font-family: "Poppins", sans-serif;
       background: radial-gradient(circle at top, #000, #0a0a0a);
       color: #ffd700;
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .main-content {
+      flex: 1;
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
-      margin: 0;
+      padding: 20px;
+      width: 100%;
+      box-sizing: border-box;
     }
 
     .signup-container {
@@ -54,6 +63,7 @@
       max-width: 400px;
       text-align: center;
       box-shadow: 0 0 20px rgba(255, 215, 0, 0.15);
+      box-sizing: border-box;
     }
 
     h1 {
@@ -66,9 +76,16 @@
       margin-bottom: 20px;
     }
 
+    h2 {
+      font-size: 1.4em;
+      color: #fff6b7;
+      margin-bottom: 25px;
+      font-weight: 600;
+    }
+
     input {
       width: 100%;
-      padding: 12px;
+      padding: 12px 15px;
       margin: 10px 0;
       border: none;
       border-radius: 8px;
@@ -76,15 +93,22 @@
       color: #ffd700;
       font-size: 1em;
       box-sizing: border-box;
+      font-family: "Poppins", sans-serif;
     }
 
     input::placeholder {
       color: rgba(255, 215, 0, 0.6);
     }
 
+    input:focus {
+      outline: none;
+      border: 1px solid #ffd700;
+      box-shadow: 0 0 8px rgba(255, 215, 0, 0.3);
+    }
+
     button {
       width: 100%;
-      padding: 12px;
+      padding: 14px;
       margin-top: 15px;
       border: none;
       border-radius: 8px;
@@ -93,6 +117,8 @@
       font-weight: 600;
       cursor: pointer;
       transition: transform 0.2s ease, box-shadow 0.2s ease;
+      font-size: 1em;
+      font-family: "Poppins", sans-serif;
     }
 
     button:hover {
@@ -104,28 +130,324 @@
       margin-top: 15px;
       color: #fff;
       font-size: 0.9em;
+      line-height: 1.4;
     }
 
     a {
       color: #ffd700;
       text-decoration: none;
       font-weight: 600;
+      transition: opacity 0.2s;
     }
 
     a:hover {
       text-decoration: underline;
+      opacity: 0.9;
+    }
+
+    /* Mobile Responsiveness */
+    @media(max-width: 768px) {
+      body {
+        height: auto;
+      }
+      
+      .main-content {
+        padding: 15px;
+        align-items: flex-start;
+        padding-top: 80px;
+      }
+      
+      .signup-container {
+        padding: 25px 20px;
+        max-width: 100%;
+        margin: 0;
+      }
+      
+      h1 {
+        font-size: 1.6em;
+        margin-bottom: 15px;
+        letter-spacing: 1px;
+      }
+      
+      h2 {
+        font-size: 1.3em;
+        margin-bottom: 20px;
+      }
+      
+      input {
+        padding: 14px 12px;
+        margin: 8px 0;
+        font-size: 16px; /* Prevents iOS zoom */
+      }
+      
+      button {
+        padding: 14px;
+        font-size: 1em;
+      }
+      
+      .site-header {
+        padding: 10px 15px;
+      }
+      
+      .logo-container img {
+        width: 40px;
+        height: 40px;
+      }
+      
+      .site-title {
+        font-size: 1.2em;
+      }
+      
+      .header-nav {
+        gap: 8px;
+      }
+      
+      .header-nav .nav-link,
+      .cart-btn {
+        padding: 6px 8px;
+        font-size: 0.9em;
+      }
+    }
+    
+    @media(max-width: 480px) {
+      .main-content {
+        padding: 12px;
+        padding-top: 70px;
+      }
+      
+      .signup-container {
+        padding: 20px 16px;
+      }
+      
+      h1 {
+        font-size: 1.4em;
+        margin-bottom: 12px;
+      }
+      
+      h2 {
+        font-size: 1.2em;
+        margin-bottom: 18px;
+      }
+      
+      input {
+        padding: 12px 10px;
+        margin: 6px 0;
+        font-size: 0.95em;
+      }
+      
+      button {
+        padding: 13px;
+        font-size: 0.95em;
+      }
+      
+      .site-header {
+        padding: 8px 12px;
+        flex-wrap: wrap;
+      }
+      
+      .logo-container {
+        gap: 8px;
+      }
+      
+      .logo-container img {
+        width: 36px;
+        height: 36px;
+      }
+      
+      .site-title {
+        font-size: 1.1em;
+      }
+      
+      .header-nav {
+        gap: 5px;
+      }
+      
+      .header-nav .nav-link {
+        padding: 5px 6px;
+        font-size: 0.85em;
+      }
+      
+      p {
+        font-size: 0.85em;
+      }
+    }
+    
+    @media(max-width: 360px) {
+      .signup-container {
+        padding: 18px 14px;
+      }
+      
+      h1 {
+        font-size: 1.3em;
+      }
+      
+      h2 {
+        font-size: 1.1em;
+      }
+      
+      .site-title {
+        font-size: 1em;
+      }
+      
+      .logo-container img {
+        width: 32px;
+        height: 32px;
+      }
+    }
+    
+    /* Landscape orientation fix */
+    @media screen and (max-height: 600px) and (orientation: landscape) {
+      .main-content {
+        padding: 10px;
+        padding-top: 70px;
+        align-items: flex-start;
+      }
+      
+      .signup-container {
+        max-width: 100%;
+        margin: 10px 0;
+        padding: 20px;
+      }
+      
+      input {
+        padding: 10px 12px;
+        margin: 5px 0;
+      }
+      
+      button {
+        padding: 12px;
+        margin-top: 10px;
+      }
+    }
+    
+    /* Tablet optimization */
+    @media screen and (min-width: 769px) and (max-width: 1024px) {
+      .signup-container {
+        max-width: 450px;
+        padding: 35px 30px;
+      }
+    }
+    
+    /* Accessibility improvements */
+    @media (prefers-reduced-motion: reduce) {
+      button, input {
+        transition: none;
+      }
+    }
+    
+    /* Popup Modal */
+    .popup-modal {
+      display: none;
+      position: fixed;
+      z-index: 9999;
+      left: 0; 
+      top: 0; 
+      width: 100vw; 
+      height: 100vh;
+      background: rgba(0,0,0,0.85);
+      justify-content: center; 
+      align-items: center;
+      padding: 16px;
+      box-sizing: border-box;
+    }
+    
+    .popup-modal.active { 
+      display: flex; 
+    }
+    
+    .popup-content {
+      background: #181818;
+      color: #ffd700;
+      border-radius: 12px;
+      padding: 28px 24px 20px 24px;
+      min-width: 260px;
+      max-width: 90vw;
+      box-shadow: 0 4px 32px rgba(255,215,0,0.15);
+      text-align: center;
+      font-size: 1.1em;
+      position: relative;
+      width: 100%;
+    }
+    
+    @media(max-width: 480px) {
+      .popup-content {
+        padding: 24px 20px 16px 20px;
+        font-size: 1em;
+      }
+    }
+    
+    .popup-close {
+      margin-top: 18px;
+      background: linear-gradient(90deg,#ffd700,#ffcc33);
+      color: #222;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 24px;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 1em;
+      transition: background 0.2s;
+      width: 100%;
+      max-width: 200px;
+    }
+    
+    @media(max-width: 480px) {
+      .popup-close {
+        padding: 10px 20px;
+        font-size: 0.95em;
+      }
+    }
+    
+    .popup-close:hover { 
+      background: linear-gradient(90deg,#ffcc33,#ffd700); 
+    }
+    
+    /* Touch-friendly improvements */
+    @media (hover: none) {
+      button:hover {
+        transform: none;
+      }
+      
+      a:hover {
+        opacity: 1;
+      }
     }
   </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="logo-container">
+        <a href="index.html"><img src="LOGO.jpg" alt="Whisk & Whimsy Logo"></a>
+        <a href="index.html" class="site-title">Whisk & Whimsy ✨</a>
+      </div>
+      <nav class="header-nav">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="shop.html" class="nav-link">Shop</a>
+        <a href="login.html" class="nav-link">Login</a>
+      </nav>
+    </div>
+  </header>
 
-  <div class="signup-container">
-    <h1>Whisk & Whimsy</h1>
-    <h2>Sign Up</h2>
-    <input type="email" id="email" placeholder="Email Address" required />
-    <input type="tel" id="contactNumber" placeholder="Contact Number" required />
-    <input type="password" id="password" placeholder="Password" required />
-    <input type="password" id="retypePassword" placeholder="Re-Type Password" required />
-    <button onclick="signup()">Create Account</button>
-    <p>Already have an account? <a href="login.html">Login</a></p>
+  <div class="main-content">
+    <div class="signup-container">
+      <h1>Whisk & Whimsy</h1>
+      <h2>Sign Up</h2>
+      <input type="email" id="email" placeholder="Email Address" required />
+      <input type="tel" id="contactNumber" placeholder="Contact Number" required />
+      <input type="password" id="password" placeholder="Password" required />
+      <input type="password" id="retypePassword" placeholder="Re-Type Password" required />
+      <button onclick="signup()">Create Account</button>
+      <p>Already have an account? <a href="login.html">Login</a></p>
+    </div>
+  </div>
+
+  <!-- Popup Modal -->
+  <div id="popupModal" class="popup-modal">
+    <div class="popup-content">
+      <span id="popupMessage"></span>
+      <button class="popup-close" onclick="closePopup()">OK</button>
+    </div>
   </div>
 
   <script>
@@ -170,187 +492,34 @@
       customers.push({ email, contactNumber, password });
       localStorage.setItem("customers", JSON.stringify(customers));
       showPopup("Account created successfully! You can now log in.");
-      window.location.href = "login.html";
+      setTimeout(() => {
+        window.location.href = "login.html";
+      }, 1500);
     }
-  </script>
-    <script>
-      function updateCartCount() {
-        const cart = JSON.parse(localStorage.getItem('cart')) || [];
-        const el = document.getElementById('cartCount');
-        if (el) el.textContent = cart.length;
-      }
-      function toggleCart() { const modal = document.getElementById('cartModal'); if (modal) modal.classList.toggle('active'); else window.location.href='shop.html'; }
-      document.addEventListener('DOMContentLoaded', updateCartCount);
-    </script>
-</body>
-  <!-- Popup Modal -->
-  <div id="popupModal" class="popup-modal">
-    <div class="popup-content">
-      <span id="popupMessage"></span>
-      <button class="popup-close" onclick="closePopup()">OK</button>
-    </div>
-  </div>
-  <style>
-    .popup-modal {
-      display: none;
-      position: fixed;
-      z-index: 9999;
-      left: 0; top: 0; width: 100vw; height: 100vh;
-      background: rgba(0,0,0,0.45);
-      justify-content: center; align-items: center;
-    }
-    .popup-modal.active { display: flex; }
-    .popup-content {
-      background: #181818;
-      color: #ffd700;
-      border-radius: 12px;
-      padding: 32px 28px 20px 28px;
-      min-width: 260px;
-      max-width: 90vw;
-      box-shadow: 0 4px 32px rgba(255,215,0,0.15);
-      text-align: center;
-      font-size: 1.1em;
-      position: relative;
-    }
-    .popup-close {
-      margin-top: 18px;
-      background: linear-gradient(90deg,#ffd700,#ffcc33);
-      color: #222;
-      border: none;
-      border-radius: 8px;
-      padding: 8px 24px;
-      font-weight: 600;
-      cursor: pointer;
-      font-size: 1em;
-      transition: background 0.2s;
-    }
-    .popup-close:hover { background: linear-gradient(90deg,#ffcc33,#ffd700); }
-    /* === MOBILE RESPONSIVENESS ADDITIONS === */
-@media screen and (max-width: 768px) {
-  body {
-    height: auto;
-    min-height: 100vh;
-    padding: 20px 15px;
-    display: block;
-  }
-
-  .signup-container {
-    max-width: 100%;
-    padding: 25px 20px;
-    margin: 0 auto;
-    border: 1px solid rgba(255, 215, 0, 0.2);
-  }
-
-  h1 {
-    font-size: 1.6em;
-    margin-bottom: 15px;
-  }
-
-  h2 {
-    font-size: 1.3em;
-    margin-bottom: 20px;
-  }
-
-  input {
-    padding: 14px 12px;
-    margin: 8px 0;
-    font-size: 16px; /* Prevents iOS zoom */
-  }
-
-  button {
-    padding: 14px;
-  }
-
-  .site-header {
-    padding: 10px 15px;
-    position: relative;
-  }
-
-  .logo-container img {
-    width: 40px;
-    height: 40px;
-  }
-
-  .site-title {
-    font-size: 1.2em;
-  }
-
-  .header-nav {
-    gap: 8px;
-  }
-
-  .header-nav .nav-link,
-  .cart-btn {
-    padding: 6px 8px;
-    font-size: 0.9em;
-  }
-}
-
-/* Very small phones */
-@media screen and (max-width: 480px) {
-  .signup-container {
-    padding: 20px 15px;
-  }
-
-  h1 {
-    font-size: 1.4em;
-  }
-
-  h2 {
-    font-size: 1.2em;
-  }
-
-  .logo-container {
-    gap: 8px;
-  }
-
-  .logo-container img {
-    width: 36px;
-    height: 36px;
-  }
-
-  .site-title {
-    font-size: 1.1em;
-  }
-
-  .header-nav {
-    gap: 5px;
-  }
-
-  .header-nav .nav-link {
-    padding: 5px 6px;
-    font-size: 0.85em;
-  }
-}
-
-/* Landscape orientation fix */
-@media screen and (max-height: 600px) and (orientation: landscape) {
-  body {
-    height: auto;
-    padding: 15px 10px;
-  }
-
-  .signup-container {
-    max-width: 90%;
-    margin: 20px auto;
-  }
-}
-
-/* Tablet optimization */
-@media screen and (min-width: 769px) and (max-width: 1024px) {
-  .signup-container {
-    max-width: 450px;
-  }
-}
-  </style>
-  <script>
+    
     function showPopup(msg) {
       document.getElementById('popupMessage').textContent = msg;
       document.getElementById('popupModal').classList.add('active');
     }
+    
     function closePopup() {
       document.getElementById('popupModal').classList.remove('active');
     }
+    
+    // Update cart count on page load
+    function updateCartCount() {
+      const cart = JSON.parse(localStorage.getItem('cart')) || [];
+      const el = document.getElementById('cartCount');
+      if (el) el.textContent = cart.length;
+    }
+    
+    function toggleCart() { 
+      const modal = document.getElementById('cartModal'); 
+      if (modal) modal.classList.toggle('active'); 
+      else window.location.href='shop.html'; 
+    }
+    
+    document.addEventListener('DOMContentLoaded', updateCartCount);
   </script>
+</body>
 </html>
-
