@@ -1,0 +1,72 @@
+/* Checkout Page Layout */
+.checkout-container {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 25px;
+  padding: 40px;
+  background: #fff;
+  color: #000;
+}
+
+.checkout-box {
+  background: #ffffff;
+  padding: 25px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+}
+
+.checkout-box h2 {
+  margin-top: 0;
+  margin-bottom: 15px;
+  font-size: 1.4em;
+  font-weight: 700;
+}
+
+.checkout-box label {
+  display: block;
+  margin-top: 10px;
+  font-weight: 600;
+}
+
+.checkout-box input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #bbb;
+  border-radius: 6px;
+  margin-top: 5px;
+}
+
+.checkout-summary {
+  border-left: 1px solid #ddd;
+  padding-left: 25px;
+}
+
+.summary-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.summary-total {
+  font-weight: 800;
+  font-size: 1.2em;
+  margin-top: 20px;
+}
+
+.pay-btn {
+  width: 100%;
+  padding: 12px;
+  margin-top: 20px;
+  background: #007bff;
+  border: none;
+  color: #fff;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.pay-btn:hover {
+  background: #005fcc;
+}
